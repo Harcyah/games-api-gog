@@ -4,23 +4,19 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 
 public class GogServiceImpl implements GogService {
 
-    private static final Gson GSON = new Gson();
+    private final Gson gson;
 
-    private final GogGamesList games;
-
-    public GogServiceImpl(String path) throws IOException {
-        File file = new File(path);
-        FileReader reader = new FileReader(file);
-        this.games = GSON.fromJson(reader, GogGamesList.class);
+    public GogServiceImpl() {
+        this.gson = new Gson();
     }
 
     @Override
-    public GogGamesList getGames() {
-        return games;
+    public GogGamesList getGames(File file) throws Exception {
+        FileReader reader = new FileReader(file);
+        return gson.fromJson(reader, GogGamesList.class);
     }
 
 }

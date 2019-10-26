@@ -2,6 +2,7 @@ package com.harcyah.games.api.gog;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,11 +11,14 @@ class GogServiceImplTest {
 
     @Test
     void testService() throws Exception {
+        // Given
         String file = getClass().getResource("/games.json").getFile();
-        GogService service = new GogServiceImpl(file);
+        GogService service = new GogServiceImpl();
 
-        GogGamesList games = service.getGames();
+        // When
+        GogGamesList games = service.getGames(new File(file));
 
+        // Then
         assertThat(games.getTotal()).isEqualTo(25L);
 
         List<Item> items = games.getEmbedded().getItems();
