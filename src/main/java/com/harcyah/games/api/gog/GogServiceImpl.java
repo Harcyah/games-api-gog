@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
 
 public class GogServiceImpl implements GogService {
 
@@ -15,8 +16,9 @@ public class GogServiceImpl implements GogService {
 
     @Override
     public GogGamesList getGames(File file) throws Exception {
-        FileReader reader = new FileReader(file);
-        return gson.fromJson(reader, GogGamesList.class);
+        try (FileReader reader = new FileReader(file, StandardCharsets.UTF_8)) {
+            return gson.fromJson(reader, GogGamesList.class);
+        }
     }
 
 }
